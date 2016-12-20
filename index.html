@@ -1,0 +1,147 @@
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<style>
+			*{
+				padding:0px;
+				margin:0px;
+			}
+			
+			#text:focus {
+				outline:none;
+			}
+
+			#text{
+				width: 800px;
+				height: 110px;
+				border-radius: 10px;
+				box-shadow: 0 0 0 1px #ccc;
+				border: 5px solid transparent;
+				resize: vertical;
+				padding:0px;
+				margin:0px;
+			}
+
+			.stuffs{
+			  padding:0px;
+			  margin:0px;
+			  color:#888;
+			  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			  font-size:12pt;
+			}
+
+			.float-right{
+			  float:right;
+			}
+			
+			.float-left{
+			  float:left;
+			}
+
+			#container{
+			  width: 800px;
+			  height:200px;
+			  position:relative;
+			  margin:0 auto;
+			  top:50px;
+			}
+
+			.warn{
+			   color:#ff4d5f;
+			}
+			
+			body{
+				background-color:#eee;
+			}
+			
+			#headerBand{
+				width: 800px;
+				height:30px;
+				position:relative;
+				margin:0 auto;
+				top:0px;
+				text-align:right;
+			}
+			
+			.button{
+				background: #eee;
+				display:inline-block;
+				padding:10px;
+				border-radius: 10px;
+				box-shadow: 0 0 0 1px #ccc;
+				margin-top:5px;
+				cursor:pointer;
+			}
+			
+			.cnt{
+				line-height:30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="headerBand">
+			<a href="#" class="stuffs" lang="pt">Português</a> |
+			<a href="#" class="stuffs" lang="en">English</a>
+		</div>
+		<div id="container">
+			<p id="title" class="stuffs">Write your short story here!</p>
+			<textarea id="text"></textarea>
+			<div onclick="sendMessage()" class="button float-right">Send</div>
+			<p id="charCnt" class="stuffs float-left cnt">654</p>
+		</div>
+		
+		
+		<script>
+			var links = document.getElementsByTagName("a");
+			var userlang = 'en';
+			var finalMessage = 'Nobody cares!';
+			
+			for(var x = 0; x<links.length; x++){
+				links[x].onclick = function(){
+					var lang = this.getAttribute("lang");
+					
+					if(lang != null){
+						userlang = lang;
+						switch(lang){
+							case 'pt':
+								document.getElementById('title').innerHTML = 'Escreva a sua história curta aqui!';
+								finalMessage = 'Ninguém se importa!';
+								break;
+							case 'en':
+								document.getElementById('title').innerHTML = 'Write your short story here!';
+								break;
+							default:
+								document.getElementById('title').innerHTML = 'Write your short story here!';
+								break;
+						}
+					}else{
+						
+					}
+				}
+			}
+			
+			document.getElementById('text').oninput = function () {
+				var totalChar = 654;
+				this.value = this.value.substring(0,totalChar);
+				var charCount = this.value.length;
+				var charCountL = totalChar - charCount;
+				var charCnt = document.getElementById('charCnt');
+				  
+				charCnt.innerHTML = charCountL;
+				  
+				if(charCountL <= 0){
+					charCnt.setAttribute("class","stuffs float-left cnt warn");
+					this.setAttribute("maxlength",charCount);
+				}else{
+					charCnt.removeAttribute("class");
+					charCnt.setAttribute("class","stuffs float-left cnt");
+					this.removeAttribute("maxlength");
+				 }
+			};
+			
+			function sendMessage(){
+				alert(finalMessage);
+			}
+		</script>
+	</body>
+</html>
